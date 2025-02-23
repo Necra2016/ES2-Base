@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 public class mouvement : MonoBehaviour
 {
     [SerializeField] private float _vitessePromenade;
@@ -11,10 +12,13 @@ public class mouvement : MonoBehaviour
     [SerializeField] private float _modifierAnimTranslation;
     private Animator _animator;
 
+    public float speed = 0.25f;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+
     }
 
     void OnMouvement(InputValue directionBase)
@@ -28,8 +32,21 @@ public class mouvement : MonoBehaviour
         Vector3 mouvement = directionInput;
         _rb.AddForce(mouvement, ForceMode.VelocityChange);
 
-        Vector3 vitesseSurPlane = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
-        _animator.SetFloat("hautBas", vitesseSurPlane.magnitude * _modifierAnimTranslation);
-        _animator.SetFloat("AvanceRecule", vitesseSurPlane.magnitude);
+        Vector3 vitesseSurPlane = new Vector3(0f, _rb.velocity.x, _rb.velocity.z);
+        _animator.SetFloat("AvanceRecule", vitesseSurPlane.magnitude *speed);
+
+        Vector3 vitesseSurPlaneY = new Vector3(0f, _rb.velocity.x, _rb.velocity.y);
+        _animator.SetFloat("hautBas", vitesseSurPlaneY.magnitude *speed);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            _vitessePromenade = speed * 2;  
+        }
+        else
+        {
+            _vitessePromenade = speed;  
+        }
+        Vector3 movement = new Vector3(0, _rb.velocity.y, _rb.velocity.z) * speed * Time.deltaTime;
+        _rb.MovePosition(transform.position + movement);
     }
 }
