@@ -38,6 +38,9 @@ public class mouvement : MonoBehaviour
         Vector3 vitesseSurPlaneY = new Vector3(0f, _rb.velocity.x, _rb.velocity.y);
         _animator.SetFloat("hautBas", vitesseSurPlaneY.magnitude *speed);
 
+        _animator.SetFloat("vitesseY", vitesseSurPlaneY.magnitude);
+        _animator.SetFloat("vitesse", vitesseSurPlane.magnitude);
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             _vitessePromenade = speed * 2;  
