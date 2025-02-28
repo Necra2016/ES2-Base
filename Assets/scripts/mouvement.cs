@@ -33,13 +33,13 @@ public class mouvement : MonoBehaviour
         _rb.AddForce(mouvement, ForceMode.VelocityChange);
 
         Vector3 vitesseSurPlane = new Vector3(0f, _rb.velocity.x, _rb.velocity.z);
-        _animator.SetFloat("AvanceRecule", vitesseSurPlane.magnitude *speed);
-
-        Vector3 vitesseSurPlaneY = new Vector3(0f, _rb.velocity.x, _rb.velocity.y);
-        _animator.SetFloat("hautBas", vitesseSurPlaneY.magnitude *speed);
-
-        _animator.SetFloat("vitesseY", vitesseSurPlaneY.magnitude);
+        _animator.SetFloat("AvanceRecule", vitesseSurPlane.z * speed);
         _animator.SetFloat("vitesse", vitesseSurPlane.magnitude);
+
+        Vector3 vitesseSurPlaneY = new Vector3(0f, _rb.velocity.y, _rb.velocity.y);
+        _animator.SetFloat("hautBas", vitesseSurPlaneY.y * speed);
+        _animator.SetFloat("vitesseY", vitesseSurPlaneY.magnitude);
+
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
